@@ -218,15 +218,45 @@ function getActiveCorner(me, activeCorner) {
 
 function ActiveFire(me, fire) { // TODO: Only check danger in the direction of the fire
   if (fire.length === 0) {
+    console.log("No fire!")
     return false;
   }
-  for (const f of fire) {
-    if (Math.abs(f.x - me.x) <= 3 && Math.abs(f.y - me.y) <= 3) {
-      return true;
-    }
+  if (!FireInMyRadius(me, fire)) {
+    return false;
   }
   return true;
 }
+function FireInMyRadius(me, fire) {
+  let xMin = me.x - 3;
+  let xMax = me.x + 3;
+  let yMin = me.y - 3;
+  let yMax = me.y + 3;
+  
+  for (const f of fire) {
+    if (f.x <= xMax && f.x >= xMin) {
+      console.log("Fire in my radius!")
+      return true;
+    } else if (f.y <= yMax && f.y >= yMin) {
+      console.log("Fire in my radius!")
+      return true;
+    }
+  }
+  console.log("No fire in my radius!")
+  return false;
+}
+function FireDangerXmin(fire) {
+  return fire.x + 3;
+}
+function FireDangerXmax(fire) {
+  return fire.x - 3;
+}
+function FireDangerYmin(fire) {
+  return fire.y + 3;
+}
+function FireDangerYmax(fire) {
+  return fire.y - 3;
+}
+
 
 function RightMovePossble(me, board) {
   if (me.x === 14) {

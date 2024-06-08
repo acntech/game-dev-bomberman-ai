@@ -49,9 +49,9 @@ function evaluateUp(board, fires, bombs, players, aiPos) {
 
     if (y === 0 || isWall(board, x, y-1) || isFire(fires, x, y-1)) return -Infinity;
 
-    if (tileIsEmptyAndNotFire(board, fires, x, y-1)) utility += 1;
+    if (tileIsEmptyAndNotFire(board, fires, x, y-1)) utility += 2;
 
-    if (rowHasBomb(bombs, y-1)) utility -= 1;
+    if (rowHasBomb(bombs, y-1)) utility -= 3;
 
     if (wasPrevLocation(x, y-1)) utility -= 1;
 
@@ -64,9 +64,9 @@ function evaluateDown(board, fires, bombs, players, aiPos) {
 
     if (y === 14 || isWall(board, x, y+1) || isFire(fires, x, y+1)) return -Infinity;
 
-    if (tileIsEmptyAndNotFire(board, fires, x, y+1)) utility += 1;
+    if (tileIsEmptyAndNotFire(board, fires, x, y+1)) utility += 2;
 
-    if (rowHasBomb(bombs, y+1)) utility -= 1;
+    if (rowHasBomb(bombs, y+1)) utility -= 3;
 
     if (wasPrevLocation(x, y+1)) utility -= 1;
 
@@ -79,9 +79,9 @@ function evaluateLeft(board, fires, bombs, players, aiPos) {
 
     if (x === 0 || isWall(board, x-1, y) || isFire(fires, x-1, y)) return -Infinity;
 
-    if (tileIsEmptyAndNotFire(board, fires, x-1, y)) utility += 1;
+    if (tileIsEmptyAndNotFire(board, fires, x-1, y)) utility += 2;
 
-    if (colHasBomb(bombs, x-1)) utility -= 1;
+    if (colHasBomb(bombs, x-1)) utility -= 3;
 
     if (wasPrevLocation(x-1, y)) utility -= 1;
 
@@ -94,9 +94,9 @@ function evaluateRight(board, fires, bombs, players, aiPos) {
 
     if (x === 14 || isWall(board, x+1, y) || isFire(fires, x+1, y)) return -Infinity;
 
-    if (tileIsEmptyAndNotFire(board, fires, x+1, y)) utility += 1;
+    if (tileIsEmptyAndNotFire(board, fires, x+1, y)) utility += 2;
 
-    if (colHasBomb(bombs, x+1)) utility -= 1;
+    if (colHasBomb(bombs, x+1)) utility -= 3;
 
     if (wasPrevLocation(x+1, y)) utility -= 1;
 
@@ -140,7 +140,7 @@ function selectBestMove() {
 
     prev_pos = aiPos;
 
-    console.log("BEST MOVE", bestMove, highestUtility);
+    // console.log("BEST MOVE", bestMove, highestUtility);
     return bestMove;
 }
 
@@ -180,11 +180,11 @@ function get_action() {
 }
 
 function rowHasBomb(bombs, row) {
-    return bombs.find(bomb => bomb.y == row);
+    return bombs.some(bomb => bomb.y == row);
 }
 
 function colHasBomb(bombs, col) {
-    return bombs.find(bomb => bomb.x == col);
+    return bombs.some(bomb => bomb.x == col);
 }
 
 function tileIsEmptyAndNotFire(board, fires, x, y) {
@@ -271,6 +271,7 @@ function isOnBomb(bombs, aiPos) {
 }
 
 ////////////////// TESTS ///////////////////
+/*
 const testBoard = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
     [0,6,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -292,4 +293,4 @@ const testBoard = [
 const testFires = [{x: 0, y: 0}, {x: 1, y: 0}];
 
 console.log("TEST1 skal være true", hasEscapeRoute(testBoard, testFires, {x: 0, y: 2}));
-
+*/

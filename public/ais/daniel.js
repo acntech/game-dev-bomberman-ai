@@ -11,19 +11,12 @@ export function makeAi(id) {
 var aftenFucker = 0;
   my_id = id;
   return {
-    get_action: get_action,
     get_action: () => {
       const action = get_action(id, aftenFucker);
       aftenFucker++;
       return action;
     },
   };
-}
-
-// Returns the AI-s chosen action. For legal actions see the list of possible actions.
-// Use methods from ai-info-gate.js to get information about the game state.
-function get_action() {
-    // your code goes here
 }
 function get_action(id, aftenFucker) {
   const array = getArray(id) 

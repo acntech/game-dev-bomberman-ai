@@ -4,6 +4,7 @@ import { getActionsInfo, getBoardInfo, getBombsInfo, getFiresInfo, getPlayersInf
 
 // Variable to store the assigned player id when creating the AI object.
 var my_id;
+var activeCorner;
 
 // Function to create the AI decision maker object. Must return an object with a get_action function.
 export function makeAi(id) {
@@ -33,90 +34,116 @@ function get_action() {
   // console.log(fire);
   // console.log(players);
   // console.log(tileTypes);
-  // Sjekk om bombe er under, til høyre, venstre, over eller nedenfor
   const me = players.find((p) => p.id === my_id);
-  console.log("me: ", me);
+  activeCorner = getActiveCorner(me, activeCorner);
+  console.log("Active corner: ", activeCorner);
   const closestBomb = bombs.find((b) => Math.abs(b.x - me.x) <= 3 || Math.abs(b.y - me.y) <= 3);
-  // console.log("closestBomb: ", closestBo;
   if (closestBomb === undefined) {
     if (ActiveFire(me, fire)) {
       return actions.no_action;
     }
-    // const quadrant = getCurrentQuadrant(me);
-    // switch (quadrant) {
-    //   case "upperLeft":
-    //     console.log("I am in the upper left quadrant");
-    //     if (RightMovePossble(me, board) && me.x !== 7) {
-    //       console.log("No bombs, moving right")
-    //       return actions.right;
-    //     }
-    //     if (DownMovePossible(me, board)) {
-    //       console.log("No bombs, moving down")
-    //       return actions.down;
-    //     }
-    //     console.log("No valid moves, placing bomb")
-    //     return actions.bomb;
-    //   case "upperRight":
-    //     console.log("I am in the upper right quadrant");
-    //     if (LeftMovePossible(me, board)) {
-    //       console.log("No bombs, moving left")
-    //       return actions.left;
-    //     }
-    //     if (DownMovePossible(me, board)) {
-    //       console.log("No bombs, moving down")
-    //       return actions.down;
-    //     }
-    //     console.log("No valid moves, placing bomb")
-    //     return actions.bomb;
-    //   case "lowerLeft":
-    //     console.log("I am in the lower left quadrant");
-    //     if (RightMovePossble(me, board)) {
-    //       console.log("No bombs, moving right")
-    //       return actions.right;
-    //     }
-    //     if (UpMovePossible(me, board)) {
-    //       console.log("No bombs, moving up")
-    //       return actions.up;
-    //     }
-    //     console.log("No valid moves, placing bomb")
-    //     return actions.bomb;
-    //   case "lowerRight":
-    //     console.log("I am in the lower right quadrant");
-    //     if (LeftMovePossible(me, board)) {
-    //       console.log("No bombs, moving left")
-    //       return actions.left;
-    //     }
-    //     if (UpMovePossible(me, board)) {
-    //       console.log("No bombs, moving up")
-    //       return actions.up;
-    //     }
-    //     console.log("No valid moves, placing bomb")
-    //     return actions.bomb;
-    // }
     const r = Math.floor(Math.random() * 2);
-    switch (r){
-      case 0:
-        if (RightMovePossble(me, board)) {
-          console.log("No bombs, moving right")
-          return actions.right;
+    switch (activeCorner) {
+      case "upperLeft":
+        switch (r){
+          case 0:
+            if (RightMovePossble(me, board)) {
+              console.log("No bombs, moving right")
+              return actions.right;
+            }
+            if (DownMovePossible(me, board)) {
+              console.log("No bombs, moving down")
+              return actions.down;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
+          case 1:
+            if (DownMovePossible(me, board)) {
+              console.log("No bombs, moving down")
+              return actions.down;
+            }
+            if (RightMovePossble(me, board)) {
+              console.log("No bombs, moving right")
+              return actions.right;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
         }
-        if (DownMovePossible(me, board)) {
-          console.log("No bombs, moving down")
-          return actions.down;
+      case "upperRight":
+        switch (r){
+          case 0:
+            if (LeftMovePossible(me, board)) {
+              console.log("No bombs, moving left")
+              return actions.left;
+            }
+            if (DownMovePossible(me, board)) {
+              console.log("No bombs, moving down")
+              return actions.down;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
+          case 1:
+            if (DownMovePossible(me, board)) {
+              console.log("No bombs, moving down")
+              return actions.down;
+            }
+            if (LeftMovePossible(me, board)) {
+              console.log("No bombs, moving left")
+              return actions.left;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
         }
-        console.log("No valid moves, placing bomb")
-        return actions.bomb;
-      case 1:
-        if (DownMovePossible(me, board)) {
-          console.log("No bombs, moving down")
-          return actions.down;
+      case "lowerLeft":
+        switch (r){
+          case 0:
+            if (RightMovePossble(me, board)) {
+              console.log("No bombs, moving right")
+              return actions.right;
+            }
+            if (UpMovePossible(me, board)) {
+              console.log("No bombs, moving up")
+              return actions.up;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
+          case 1:
+            if (UpMovePossible(me, board)) {
+              console.log("No bombs, moving up")
+              return actions.up;
+            }
+            if (RightMovePossble(me, board)) {
+              console.log("No bombs, moving right")
+              return actions.right;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
         }
-        if (RightMovePossble(me, board)) {
-          console.log("No bombs, moving right")
-          return actions.right;
+      case "lowerRight":
+        switch (r) {
+          case 0:
+            if (LeftMovePossible(me, board)) {
+              console.log("No bombs, moving left")
+              return actions.left;
+            }
+            if (UpMovePossible(me, board)) {
+              console.log("No bombs, moving up")
+              return actions.up;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
+          case 1:
+            if (UpMovePossible(me, board)) {
+              console.log("No bombs, moving up")
+              return actions.up;
+            }
+            if (LeftMovePossible(me, board)) {
+              console.log("No bombs, moving left")
+              return actions.left;
+            }
+            console.log("No valid moves, placing bomb")
+            return actions.bomb;
         }
-        console.log("No valid moves, placing bomb")
-        return actions.bomb;
     }
   }
   if (!InDanger(bombs, me)) {
@@ -179,6 +206,23 @@ function get_action() {
 
 
 // UTILS
+function getActiveCorner(me, activeCorner) {
+  console.log("in getActiveCorner, last active corner: ", activeCorner)
+  if (me.x === 0 && me.y === 0) {
+    return "upperLeft";
+  }
+  else if (me.x === 14 && me.y === 0) {
+    return "upperRight";
+  }
+  else if (me.x === 0 && me.y === 14) {
+    return "lowerLeft";
+  }
+  else if (me.x === 14 && me.y === 14) {
+    return "lowerRight";
+  }
+  return activeCorner;
+}
+
 
 function getCurrentQuadrant(me) { // dobbelsjekk denne
   if (me.x <= 7 && me.y <= 7) {

@@ -29,11 +29,6 @@ function get_action() {
   const fire = getFiresInfo();
   const players = getPlayersInfo();
   const tileTypes = getTileTypesInfo();
-  console.log("board: ", board);
-  console.log("bombs: ", bombs);
-  // console.log(fire);
-  // console.log(players);
-  // console.log(tileTypes);
   const me = players.find((p) => p.id === my_id);
   activeCorner = getActiveCorner(me, activeCorner);
   console.log("Active corner: ", activeCorner);
@@ -48,100 +43,100 @@ function get_action() {
         switch (r){
           case 0:
             if (RightMovePossble(me, board)) {
-              console.log("No bombs, moving right")
+              // console.log("No bombs, moving right")
               return actions.right;
             }
             if (DownMovePossible(me, board)) {
-              console.log("No bombs, moving down")
+              // console.log("No bombs, moving down")
               return actions.down;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
           case 1:
             if (DownMovePossible(me, board)) {
-              console.log("No bombs, moving down")
+              // console.log("No bombs, moving down")
               return actions.down;
             }
             if (RightMovePossble(me, board)) {
-              console.log("No bombs, moving right")
+              // console.log("No bombs, moving right")
               return actions.right;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
         }
       case "upperRight":
         switch (r){
           case 0:
             if (LeftMovePossible(me, board)) {
-              console.log("No bombs, moving left")
+              // console.log("No bombs, moving left")
               return actions.left;
             }
             if (DownMovePossible(me, board)) {
-              console.log("No bombs, moving down")
+              // console.log("No bombs, moving down")
               return actions.down;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
           case 1:
             if (DownMovePossible(me, board)) {
-              console.log("No bombs, moving down")
+              // console.log("No bombs, moving down")
               return actions.down;
             }
             if (LeftMovePossible(me, board)) {
-              console.log("No bombs, moving left")
+              // console.log("No bombs, moving left")
               return actions.left;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
         }
       case "lowerLeft":
         switch (r){
           case 0:
             if (RightMovePossble(me, board)) {
-              console.log("No bombs, moving right")
+              // console.log("No bombs, moving right")
               return actions.right;
             }
             if (UpMovePossible(me, board)) {
-              console.log("No bombs, moving up")
+              // console.log("No bombs, moving up")
               return actions.up;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
           case 1:
             if (UpMovePossible(me, board)) {
-              console.log("No bombs, moving up")
+              // console.log("No bombs, moving up")
               return actions.up;
             }
             if (RightMovePossble(me, board)) {
-              console.log("No bombs, moving right")
+              // console.log("No bombs, moving right")
               return actions.right;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
         }
       case "lowerRight":
         switch (r) {
           case 0:
             if (LeftMovePossible(me, board)) {
-              console.log("No bombs, moving left")
+              // console.log("No bombs, moving left")
               return actions.left;
             }
             if (UpMovePossible(me, board)) {
-              console.log("No bombs, moving up")
+              // console.log("No bombs, moving up")
               return actions.up;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
           case 1:
             if (UpMovePossible(me, board)) {
-              console.log("No bombs, moving up")
+              // console.log("No bombs, moving up")
               return actions.up;
             }
             if (LeftMovePossible(me, board)) {
-              console.log("No bombs, moving left")
+              // console.log("No bombs, moving left")
               return actions.left;
             }
-            console.log("No valid moves, placing bomb")
+            // console.log("No valid moves, placing bomb")
             return actions.bomb;
         }
     }
@@ -150,12 +145,11 @@ function get_action() {
     return actions.no_action;
   }
 
-
   // DANGER
   const bombDirection = getBombDirection(me, closestBomb);
   switch (bombDirection) {
     case "onTop":
-      console.log("I am on top of a bomb!");
+      // console.log("I am on top of a bomb!");
       if (LeftMovePossible(me, board)) {
         return actions.left;
       }
@@ -163,7 +157,7 @@ function get_action() {
         return actions.down;
       }
     case "under":
-      console.log("Bomb is under me!");
+      // console.log("Bomb is under me!");
       if (UpMovePossible(me, board)) {
         return actions.up;
       }
@@ -172,7 +166,7 @@ function get_action() {
       }
       return actions.left;
     case "over":
-      console.log("Bomb is over me!");
+      // console.log("Bomb is over me!");
       if (DownMovePossible(me, board)) {
         return actions.down;
       }
@@ -181,19 +175,19 @@ function get_action() {
       }
       return actions.left;
     case "right":
-      console.log("Bomb is to the right of me!");
+      // console.log("Bomb is to the right of me!");
       if (LeftMovePossible(me, board)) {
-        console.log("I can move left!");
+        // console.log("I can move left!");
         return actions.left;
       }
       if (UpMovePossible(me, board)) {
-        console.log("I can move up!");
+        // console.log("I can move up!");
         return actions.up;
       }
-      console.log("I must move down!");
+      // console.log("I must move down!");
       return actions.down;
     case "left":
-      console.log("Bomb is to the left of me!");
+      // console.log("Bomb is to the left of me!");
       if (RightMovePossble(me, board)) {
         return actions.right;
       }
@@ -204,10 +198,9 @@ function get_action() {
   }
 }
 
-
 // UTILS
 function getActiveCorner(me, activeCorner) {
-  console.log("in getActiveCorner, last active corner: ", activeCorner)
+  // console.log("in getActiveCorner, last active corner: ", activeCorner)
   if (me.x === 0 && me.y === 0) {
     return "upperLeft";
   }
@@ -223,50 +216,14 @@ function getActiveCorner(me, activeCorner) {
   return activeCorner;
 }
 
-
-function getCurrentQuadrant(me) { // dobbelsjekk denne
-  if (me.x <= 7 && me.y <= 7) {
-    return "upperLeft";
-  } else if (me.x > 7 && me.y <= 7) {
-    return "upperRight";
-  } else if (me.x <= 7 && me.y > 7) {
-    return "lowerLeft";
-  } else {
-    return "lowerRight";
-  }
-}
-function decideMove(me, board, actions) {
-  const possibleMoves = [
-    { move: actions.right, check: RightMovePossble },
-    { move: actions.down, check: DownMovePossible },
-    { move: actions.left, check: LeftMovePossible },
-    { move: actions.up, check: UpMovePossible }
-  ];
-
-  // Shuffle the array of moves
-  shuffleArray(possibleMoves);
-
-  for (const { move, check } of possibleMoves) {
-    if (check(me, board)) {
-      console.log(`No bombs, moving ${move}`);
-      return move;
-    }
-  }
-
-  // Default action if no conditions are met (optional)
-  console.log("No valid moves available");
-  return actions.stay;
-}
-// Function to shuffle the array
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-function ActiveFire(me, fire) {
+function ActiveFire(me, fire) { // TODO: Only check danger in the direction of the fire
   if (fire.length === 0) {
     return false;
+  }
+  for (const f of fire) {
+    if (Math.abs(f.x - me.x) <= 3 && Math.abs(f.y - me.y) <= 3) {
+      return true;
+    }
   }
   return true;
 }
@@ -275,9 +232,7 @@ function RightMovePossble(me, board) {
   if (me.x === 14) {
     return false;
   }
-  //if (board[me.x+1][me.y] === 0) {
   if (board[me.y][me.x+1] === 0) {
-    console.log("Right move is possible!")
     return true;
   }
   return false;
@@ -286,7 +241,6 @@ function LeftMovePossible(me, board) {
   if (me.x === 0) {
     return false;
   }
-  //if (board[me.x-1][me.y] === 0) {
   if (board[me.y][me.x-1] === 0) {
     return true;
   }
@@ -296,7 +250,6 @@ function UpMovePossible(me, board) {
   if (me.y === 0) {
     return false;
   }
-  //if (board[me.x][me.y-1] === 0) {
   if (board[me.y-1][me.x] === 0) {
     return true;
   }
@@ -306,7 +259,6 @@ function DownMovePossible(me, board) {
   if (me.y === 14) {
     return false;
   }
-  //if (board[me.x][me.y+1] === 0) {
   if (board[me.y+1][me.x] === 0) {
     return true;
   }
@@ -316,15 +268,12 @@ function DownMovePossible(me, board) {
 function getBombDirection(me, bomb) {
   if (bomb.x === me.x && bomb.y === me.y) {
     return "onTop"
-    // on top
   } else if (bomb.x == me.x) {
-    // check left or right
     if (bomb.y > me.y) {
       return "under";
     }
     return "over";
   } else if (bomb.y == me.y) {
-    // check up or down
     if (bomb.x > me.x) {
       return "right";
     }
@@ -336,14 +285,14 @@ function InDanger(bombs, me) {
   for (const bomb of bombs)
   {
     if (bomb.y === me.y && Math.abs(bomb.x - me.x) <= 2) { // danger in X direction
-      console.log("I am in danger!")
+      // console.log("I am in danger!")
       return true;
     }
     if (bomb.x === me.x && Math.abs(bomb.y - me.y) <= 2) {// danger in Y direction
-      console.log("I am in danger!")
+      // console.log("I am in danger!")
       return true;
     }
   }
-  console.log("I am not in danger!")
+  // console.log("I am not in danger!")
   return false;
 }
